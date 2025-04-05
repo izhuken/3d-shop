@@ -1,0 +1,46 @@
+@use 'base.module.scss';
+
+.homapageContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding-top: 100px;
+
+  width: 80%;
+  height: calc(100dvh - 65px);
+  margin: 0 auto;
+}
+
+.homapageText {
+  display: flex;
+  flex-flow: row wrap;
+  max-height: 200px;
+}
+
+.homapageTitle {
+  @include base.font(24px, 600);
+  margin-bottom: 30px;
+}
+
+.homapageContent {
+  @include base.font(16px);
+  margin-bottom: 30px;
+}
+
+@media (max-width: 900px) {
+  .imageContainer {
+    display: none;
+  }
+
+  .homapageContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .homapageText {
+    justify-content: center;
+    justify-items: center;
+
+    & > p {
+      text-align: center;
+    }
+  }
+}

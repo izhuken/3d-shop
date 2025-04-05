@@ -1,0 +1,31 @@
+@use 'base.module.scss' as *;
+
+.header {
+  @include baseContainer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+
+  box-shadow: 0px 1px 3px black;
+}
+
+.icon {
+  @include flexCenter;
+  @include font(18px, 600);
+  gap: 10px;
+}
+
+.linkContainer {
+  @include flex;
+  gap: 20px;
+}
+
+.link {
+  @include font(16px);
+  text-decoration: none;
+
+  &.active {
+    text-decoration: underline;
+  }
+}

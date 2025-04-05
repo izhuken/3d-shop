@@ -1,0 +1,16 @@
+@use 'base.module.scss' as *;
+
+.authForm {
+  @include flexCenterColumn();
+  justify-content: center;
+
+  width: 95%;
+  height: calc(100dvh - 91px);
+
+  margin: 0 auto;
+
+  & > h2 {
+    text-align: center;
+    @include font(32px, 700);
+  }
+}

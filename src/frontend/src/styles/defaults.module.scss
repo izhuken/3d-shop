@@ -1,0 +1,164 @@
+@use 'base.module.scss';
+
+.buttonDefault {
+  @include base.font(18px, 700);
+
+  margin-top: 20px;
+  padding: 14px 30px;
+  max-width: 400px;
+  width: 100%;
+  border: 2px solid var(--base-black);
+  background-color: var(--base-black);
+  color: var(--base-white);
+  border-radius: 8px;
+  transition: all 0.12s ease-in-out;
+  cursor: pointer;
+
+  &.white {
+    background-color: var(--base-white);
+    color: var(--base-black);
+  }
+}
+
+.defaultInput {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+
+  margin-top: 20px;
+}
+
+.input {
+  height: 40px;
+  width: 100%;
+
+  border: 1.5px solid var(--base-black);
+  border-radius: 5px;
+
+  padding: 20px 20px;
+
+  @include base.font(16px);
+
+  &:focus {
+    border: 1.5px solid var(--base-blue);
+    outline: none;
+  }
+
+  &.error {
+    border: 1.5px solid var(--base-red);
+  }
+}
+
+.defaultInputPlaceholder {
+  position: absolute;
+  top: calc(50% - 7px);
+  left: 20px;
+  transition: all 0.15s ease-in-out;
+
+  @include base.font(14px);
+
+  &.active {
+    top: -7px !important;
+    background-color: var(--base-white);
+    @include base.font(14px);
+  }
+
+  &.error {
+    color: var(--base-red);
+    top: calc(50% - 20px);
+  }
+}
+
+.error {
+  @include base.font(14px);
+
+  &.message {
+    @include base.flex();
+    gap: 6px;
+
+    width: 100%;
+
+    margin-top: 10px;
+    padding-left: 20px;
+
+    color: var(--base-red);
+  }
+}
+
+.modalBackground {
+  display: none;
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100dvw;
+  height: 100dvh;
+
+  &.active {
+    display: grid;
+  }
+}
+
+.loader {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--base-black);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+
+  &.white {
+    border: 2px solid var(--base-white);
+    border-bottom-color: black;
+  }
+}
+
+.mapPin {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.loaderWrapper {
+  @include base.flexCenter();
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba($color: #000000, $alpha: 0.3);
+  width: 100dvw;
+  height: 100dvh;
+}
+
+.emptyWrapper {
+  @include base.flexCenterColumn();
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding-top: 10%;
+
+  & > div {
+    @include base.font(24px, 600);
+  }
+
+  & > img {
+    height: 300px;
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

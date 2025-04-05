@@ -1,0 +1,9 @@
+{
+    "jsxSingleQuote": true,
+    "singleQuote": true,
+    "arrowPatterns": "always",
+    "maxLen": ["warning", 140, 4],
+    "tabWidth": 2,
+    "useTabs": false,
+    "endOfLine": "auto"
+  }
