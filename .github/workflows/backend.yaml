@@ -17,7 +17,7 @@ jobs:
 
       - name: Preparing backend image
         working-directory: ./src/backend
-        run: docker build -t 3d-shop-backend -f ./Dockerfile.with_kafka .
+        run: docker build -t 3d-shop-backend -f ./Dockerfile.with-kafka .
 
       - name: Tagging image
         working-directory: ./src/backend
