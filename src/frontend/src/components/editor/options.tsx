@@ -1,7 +1,8 @@
+import { NewShopForm } from '@/entities';
 import { ShopCreateStyles } from '@/styles';
 import clsx from 'clsx';
 import React, { useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { EditorInput } from './editor-input';
 import { OptionHider } from './option-hider';
 
@@ -9,10 +10,14 @@ interface EditorOptionsBoxProps {}
 
 export const EditorOptionsBox: React.FC<EditorOptionsBoxProps> = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const { watch } = useFormContext();
+  const { watch, control } = useFormContext<NewShopForm>();
+  const { remove } = useFieldArray({
+    name: 'sales',
+    control: control,
+  });
 
-  const sales = watch('events');
   const events = watch('events');
+  const sales = watch('sales');
 
   return (
     <section
@@ -50,13 +55,21 @@ export const EditorOptionsBox: React.FC<EditorOptionsBoxProps> = () => {
       </label>
 
       <OptionHider label='События'>
-        {events?.map(({ name }) => (
-          <li>{name}</li>
+        {events?.map(({ name }, i) => (
+          <li key={name}>{name}</li>
         ))}
       </OptionHider>
       <OptionHider label='Скидки'>
-        {sales?.map(({ name }) => (
-          <li>{name}</li>
+        {sales?.map(({ goods_type }, i) => (
+          <li
+            className={ShopCreateStyles.salesItem}
+            key={goods_type}
+            onClick={() => {
+              remove(i);
+            }}
+          >
+            {goods_type}
+          </li>
         ))}
       </OptionHider>
     </section>

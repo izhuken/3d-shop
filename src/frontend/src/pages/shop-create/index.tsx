@@ -2,8 +2,10 @@ import {
   EditorEntityBox,
   EditorOptionsBox,
   EditorTitleBox,
+  ShopCreateScene,
 } from '@/components';
 import { FormBaseLayout } from '@/components/form-base-layout';
+import { NewShopForm } from '@/entities';
 import { ShopCreateStyles } from '@/styles';
 import React from 'react';
 import { Helmet } from 'react-helmet';
@@ -12,7 +14,7 @@ import { useForm } from 'react-hook-form';
 interface ShopCreateProps {}
 
 export const ShopCreate: React.FC<ShopCreateProps> = () => {
-  const methods = useForm({
+  const methods = useForm<NewShopForm>({
     values: {
       name: 'Новый магазин',
       user_per_day: 50,
@@ -20,6 +22,8 @@ export const ShopCreate: React.FC<ShopCreateProps> = () => {
       close_at: '21:00',
       events: [],
       sales: [],
+      cashboxes: [],
+      shelves: [],
     },
   });
 
@@ -34,6 +38,7 @@ export const ShopCreate: React.FC<ShopCreateProps> = () => {
           <EditorTitleBox />
           <EditorOptionsBox />
           <EditorEntityBox />
+          <ShopCreateScene />
         </main>
       </FormBaseLayout>
     </>

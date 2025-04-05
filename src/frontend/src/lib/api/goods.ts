@@ -23,12 +23,15 @@ export const useCreateGoods = ({
 
   return useMutation({
     mutationFn: async (goods: GoodsForm) =>
-      await axios.post(`${API_SERVER_URL}/goods/create`, goods),
+      await axios.post(`${API_SERVER_URL}/goods`, goods),
     onError: () => toast.error('Ошибка создания товара!'),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QueryKeys.goodsList] });
       toast.success('Товар успешно создан!');
       onSuccess?.();
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.goodsList],
+        exact: false,
+      });
     },
   });
 };

@@ -3,7 +3,7 @@ import { useFetchGoodsList, useModalContext } from '@/lib';
 import { GoodsStyles } from '@/styles';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import Select from 'react-select/base';
+import Select from 'react-select';
 import { DefaultButton, DefaultInput } from '../common';
 import { FormBaseLayout } from '../form-base-layout';
 
@@ -23,7 +23,7 @@ export const SaleCreateForm: React.FC<SaleCreateFormProps> = () => {
         <FormBaseLayout
           methods={methods}
           onSub={(data) => {
-            resolve(data);
+            resolve({ goods_type: data.goods_type.value, size: data.size });
           }}
         >
           <h1>Новая скидка</h1>
@@ -33,6 +33,7 @@ export const SaleCreateForm: React.FC<SaleCreateFormProps> = () => {
             control={methods.control}
             render={({ field: { onChange, value } }) => (
               <Select
+                placeholder='Тип товара'
                 value={value}
                 onChange={onChange}
                 options={(goods ?? ([] as Goods[])).map(({ goods_type }) => ({

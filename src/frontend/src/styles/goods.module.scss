@@ -9,6 +9,7 @@
   width: 100dvw;
   height: 100dvh;
   background-color: rgba($color: #000000, $alpha: 0.3);
+  z-index: 5;
 }
 
 .createForm {
@@ -25,11 +26,18 @@
   }
 }
 
+.container {
+  @include flex();
+  flex-wrap: wrap;
+  height: fit-content;
+  gap: 5px;
+}
+
 .card {
-  @include flexCenter();
   display: grid;
   grid-template-rows: auto 40px;
   width: fit-content;
+  min-width: 162px;
   height: fit-content;
   border: 1px solid black;
   border-radius: 10px;

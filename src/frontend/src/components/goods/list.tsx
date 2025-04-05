@@ -9,7 +9,7 @@ export const GoodsList: React.FC<GoodsListProps> = () => {
   const { data: goods, isLoading } = useFetchGoodsList();
 
   return (
-    <section>
+    <section className={GoodsStyles.container}>
       <WithLoader isLoading={isLoading}>
         <WithEmpty condition={!goods || goods.length === 0}>
           {goods?.map(({ id, goods_type }) => (

@@ -4,3 +4,5 @@ export interface GoodsForm {
 }
 export * from './events';
 export * from './sales';
+export * from './scene';
+export * from './shop';

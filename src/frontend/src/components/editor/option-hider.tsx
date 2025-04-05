@@ -20,7 +20,12 @@ export function OptionHider({ label, children }: OptionHiderProps) {
         <span className={ShopCreateStyles.inputLabel}>{label}:</span>
         <img src='/admin-side-arrow.svg' alt='' />
       </button>
-      <ul className={clsx(isHidden && ShopCreateStyles.hidden)}>{children}</ul>
+      <ul
+        style={{ width: '100%' }}
+        className={clsx(isHidden && ShopCreateStyles.hidden)}
+      >
+        {children}
+      </ul>
     </label>
   );
 }

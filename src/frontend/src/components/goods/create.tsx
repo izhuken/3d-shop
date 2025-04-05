@@ -11,7 +11,7 @@ interface CreateGoodsModalProps {}
 export const CreateGoodsModal: React.FC<CreateGoodsModalProps> = () => {
   const { reject } = useModalContext();
   const methods = useForm<GoodsForm>();
-  const { mutate } = useCreateGoods();
+  const { mutate } = useCreateGoods({ onSuccess: reject });
 
   return (
     <div
