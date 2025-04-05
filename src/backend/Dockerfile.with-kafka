@@ -12,7 +12,7 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-RUN apk add gcc python3-dev musl-dev postgresql-dev
+RUN apt update -y && apt install -y gcc python3-dev musl-dev
 
 COPY --from=get-uv /root/.local/bin/uv /bin/uv
 
