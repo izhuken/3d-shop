@@ -27,3 +27,6 @@ services:
 networks:
   web:
     external: true
+
+volumes:
+  mongodb_data:

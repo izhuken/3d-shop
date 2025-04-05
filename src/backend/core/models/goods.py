@@ -1,0 +1,31 @@
+from mongoengine import Document, StringField, FloatField, ReferenceField, CASCADE, BooleanField, DictField
+from datetime import datetime
+import datetime 
+from mongoengine import connect
+from core.config import MONGODB_URL
+
+connect('main', username="mongodb", host='127.0.0.1', password="mongodb", port=27017, alias="db1")
+
+
+class Goods(Document):
+    goods_type = StringField(required=True)
+    cost = FloatField()
+
+    meta = {"db_alias": "db1"}
+
+
+class Shop(Document):
+    name = StringField(required=True)
+    is_generated = BooleanField(default=False)
+    open_at = StringField(required=True)
+    close_at = StringField(required=True)
+    data = DictField(required=True)
+
+    meta = {"db_alias": "db1"}
+
+
+
+class Simulation(Document):
+    shop = ReferenceField(Shop, reverse_delete_rule=CASCADE)
+    data = DictField()
+    meta = {"db_alias": "db1"}
