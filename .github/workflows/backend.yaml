@@ -26,3 +26,20 @@ jobs:
       - name: Push image
         working-directory: ./src/backend
         run: docker push ${{ secrets.DOCKER_USERNAME }}/3d-shop-backend:latest
+
+  deploy:
+    name: Set image
+    runs-on: kubernetes-runner
+    steps:
+      - name: Check out the repository to the runner
+        uses: actions/checkout@v4
+
+      - name: Download kubectl binaries
+        run: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+      - name: Install Kubectl
+        run: sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+      - name: Deploy the application
+        run: |
+          kubectl set image deployments/backend-service backend-service=xoriax/3d-shop-backend:latest

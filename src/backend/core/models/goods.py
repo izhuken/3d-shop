@@ -17,7 +17,7 @@ connect(
     host=MONGO_HOST,
     password=MONGO_PASS,
     port=MONGO_PORT,
-    alias="db2",
+    alias="db1",
 )
 
 
