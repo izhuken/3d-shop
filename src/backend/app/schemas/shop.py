@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from typing import Any
 
 
 class SalesJsonDict(BaseModel):
@@ -9,7 +8,7 @@ class SalesJsonDict(BaseModel):
 
 class ShopJsonData(BaseModel):
     users_per_day: int
-    scene: list[list[str | None]]
+    scene: list[list[dict | None | str]]
     events: dict[str, dict]
     sales: list[SalesJsonDict]
 

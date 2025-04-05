@@ -12,6 +12,7 @@ class GoodsRepository():
         insert_data = data.model_dump(exclude_unset=True)
         new_data = self.model(goods_type=insert_data['goods_type'], cost=insert_data['cost'])
         new_data.save()
+        
         return SuccessDTO(insert_data)
     
     def delete(self, id: str):
