@@ -36,7 +36,7 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-RUN apk add libpq
+RUN apt update -y && apt install -y libpq
 
 RUN --mount=type=bind,from=build-deps,source=/app/wheels,target=/wheels pip install \
     --no-cache-dir \
