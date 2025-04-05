@@ -7,7 +7,7 @@ load_dotenv()
 SECRET_KEY = env("SECRET_KEY")
 ALGORITHM = env("ALGORITHM")
 
-SQLALCHEMY_DATABASE_URL = env("DB_LINK")
+MONGODB_URL = env("DB_LINK")
 
 SECRET_KEY = env("SECRET_KEY")
 
