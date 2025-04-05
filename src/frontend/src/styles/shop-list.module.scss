@@ -1,0 +1,123 @@
+@use 'base.module.scss' as *;
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 220px auto;
+  height: 100dvh;
+  width: 100dvw;
+}
+
+.mainWrapper {
+  display: grid;
+  gap: 20px;
+  grid-template-rows: 60px auto;
+  width: 100%;
+  height: 100dvh;
+  padding: 0px 20px;
+}
+
+.card {
+  @include flexCenter();
+  display: grid;
+  grid-template-rows: auto 40px;
+  width: fit-content;
+  height: fit-content;
+  border: 1px solid black;
+  border-radius: 10px;
+
+  & > img {
+    padding: 10px;
+    max-height: 160px;
+    object-fit: contain;
+    width: 100%;
+  }
+
+  & > div {
+    @include flex();
+    @include font(14px, 500);
+    align-content: center;
+    width: 100%;
+    border-top: 1px solid black;
+    padding: 0 10px;
+    height: auto;
+    min-height: 100%;
+  }
+}
+
+.header {
+  @include flex();
+  justify-content: space-between;
+  height: 60px;
+
+  & > h1 {
+    @include font(32px, 600);
+  }
+}
+
+.addShopButton {
+  @include flexCenter();
+  gap: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  width: auto;
+  background: var(--base-green);
+  @include font(12px);
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.nav {
+  display: grid;
+  grid-template-rows: 60px auto;
+  background: var(--base-light-gray);
+}
+
+.navLogo {
+  @include flexCenter();
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+
+  & > img {
+    height: 38px;
+  }
+
+  & > span {
+    @include font(24px, 700);
+  }
+}
+
+.navLinkWrapper {
+  background: #ececec;
+  margin: 0 5px;
+  padding: 30px 10px;
+  border-radius: 15px;
+  height: min-content;
+}
+
+.navLinkContainer {
+  @include flexCenterColumn();
+  gap: 10px;
+}
+
+.navLink {
+  @include flex();
+  gap: 5px;
+  align-items: center;
+  text-decoration: none;
+  width: 100%;
+  padding: 5px 10px;
+  border-radius: 5px;
+  @include font(12px, 500);
+
+  &.active {
+    background: var(--base-green);
+  }
+
+  &:hover {
+    background: rgba(170, 255, 103, 0.5);
+  }
+}

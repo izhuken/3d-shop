@@ -1,0 +1,39 @@
+@use 'base.module.scss';
+
+.pageLayOut {
+  display: grid;
+
+  width: 100dvw;
+  height: 100dvh;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.nfContainer {
+  @include base.flexCenterColumn();
+
+  max-width: 300px;
+  gap: 14px;
+  @include base.font(26px, 500);
+}
+
+.nfContainer > p {
+  text-align: center;
+  font-weight: 700;
+}
+
+.FOF {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  color: var(--base-green);
+  font-size: 5em;
+  text-shadow: 6px 2px black;
+  min-height: 100px;
+}
+
+.fuck {
+  text-align: left !important;
+  width: 100%;
+}

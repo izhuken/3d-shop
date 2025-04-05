@@ -1,0 +1,160 @@
+@use 'base.module.scss' as *;
+
+.mainCanvas {
+  width: 100dvw;
+  height: 100dvh;
+  background: yellow;
+}
+
+.titleWrapper {
+  @include flex();
+  gap: 5px;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background: white;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.entityWrapper {
+  @include flex();
+  gap: 5px;
+  position: absolute;
+  background: white;
+  padding: 5px;
+  bottom: 10px;
+  border-radius: 5px;
+  margin: 0 auto;
+  left: 50%;
+  transform: translateX(-50%, 0);
+}
+
+.optionsWrapper {
+  @include flexColumn();
+  gap: 5px;
+  position: fixed;
+  background: white;
+  padding: 10px 5px;
+  left: 0;
+  border-bottom-right-radius: 5px;
+  margin: 0 auto;
+  width: 220px;
+  left: -220px;
+  max-height: 800px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: left 0.3s ease-in-out;
+
+  &.open {
+    left: 0;
+  }
+}
+
+.hideButton {
+  @include flexCenter();
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 5px;
+  background: white;
+  padding: 5px;
+  width: 100%;
+  cursor: pointer;
+
+  & > img {
+    height: 12px;
+    width: 12px;
+    object-fit: fill;
+    transform: rotate(90deg);
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.slider {
+  @include flexCenter();
+  position: absolute;
+  background: white;
+  right: -30px;
+  top: 0;
+  border-radius: 0 5px 5px 0;
+  border: none;
+  height: 30px;
+  width: 30px;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    background: var(--base-hover-gray);
+  }
+
+  &.open > img {
+    transform: rotate(180deg);
+  }
+}
+
+.editorButton {
+  @include flexCenter();
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 5px;
+  background: white;
+  height: 32px;
+  width: 32px;
+  padding: 5px;
+  cursor: pointer;
+  transition: background 0.15s ease-in-out;
+
+  & > img {
+    width: 100%;
+    object-fit: fill;
+  }
+
+  &:hover {
+    background: var(--base-hover-gray);
+  }
+}
+
+.backButtonImage {
+  transform: rotate(180deg);
+  max-height: 26px;
+}
+
+.input {
+  @include font(14px, 600);
+  height: 32px;
+  outline: 0px solid var(--base-green);
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  transition: outline 0.1s ease-in-out;
+
+  &:focus-visible {
+    outline: 2px solid var(--base-green) !important;
+  }
+
+  &.error {
+    outline: 2px solid var(--base-error);
+  }
+}
+
+.label {
+  @include flexColumn();
+  justify-content: start;
+  align-items: start;
+  gap: 5px;
+  width: 100%;
+}
+
+.inputLabel {
+  @include font(10px, 600);
+}
