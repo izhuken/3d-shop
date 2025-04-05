@@ -56,7 +56,9 @@ export const EditorOptionsBox: React.FC<EditorOptionsBoxProps> = () => {
 
       <OptionHider label='События'>
         {events?.map(({ name }, i) => (
-          <li key={name}>{name}</li>
+          <li className={ShopCreateStyles.salesItem} key={name}>
+            {name}
+          </li>
         ))}
       </OptionHider>
       <OptionHider label='Скидки'>

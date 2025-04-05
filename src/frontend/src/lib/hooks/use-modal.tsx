@@ -37,7 +37,7 @@ export function useModal<PromiseType, T = unknown>(
   );
 
   return {
-    toggle: () => {
+    toggle: (payload?: any) => {
       if (!child) {
         return setModalPromise(
           new Promise<PromiseType>((resolve, reject) => {

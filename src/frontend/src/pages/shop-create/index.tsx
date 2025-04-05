@@ -6,6 +6,7 @@ import {
 } from '@/components';
 import { FormBaseLayout } from '@/components/form-base-layout';
 import { NewShopForm } from '@/entities';
+import { useShopCreate } from '@/lib/api/shop-create';
 import { ShopCreateStyles } from '@/styles';
 import React from 'react';
 import { Helmet } from 'react-helmet';
@@ -27,13 +28,15 @@ export const ShopCreate: React.FC<ShopCreateProps> = () => {
     },
   });
 
+  const submitter = useShopCreate();
+
   return (
     <>
       <Helmet>
         <title>Создание магазина | Dev Lab</title>
       </Helmet>
 
-      <FormBaseLayout methods={methods} onSub={console.log}>
+      <FormBaseLayout methods={methods} onSub={submitter}>
         <main className={ShopCreateStyles.mainCanvas}>
           <EditorTitleBox />
           <EditorOptionsBox />

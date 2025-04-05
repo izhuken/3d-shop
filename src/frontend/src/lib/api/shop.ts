@@ -1,7 +1,9 @@
 import { API_SERVER_URL } from '@/config';
-import { ShopList } from '@/entities';
-import { useQuery } from '@tanstack/react-query';
+import { ShopCreate, ShopList } from '@/entities';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import { QueryKeys } from './keys';
 
 export const useFetchShopList = () => {
@@ -23,5 +25,23 @@ export const useFetchShopList = () => {
               },
             ] as ShopList[]
         ),
+  });
+};
+
+export const useCreateShopMutation = () => {
+  const queryClient = useQueryClient();
+  const nav = useNavigate();
+
+  return useMutation({
+    mutationFn: async (data: ShopCreate) =>
+      await axios.post(`${API_SERVER_URL}/shop`, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.shopList],
+        exact: false,
+      });
+      toast.success('Успешно!');
+      nav('/admin');
+    },
   });
 };

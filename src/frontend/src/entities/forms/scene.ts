@@ -16,6 +16,7 @@ export interface Cashbox extends SceneEntity {
 export interface Shelf extends SceneEntity {
   type: 'shelf';
   goods: Goods[];
+  shelf_type: string;
   color: 'blue';
 }
 
