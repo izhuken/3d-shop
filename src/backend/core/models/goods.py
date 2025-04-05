@@ -1,10 +1,24 @@
-from mongoengine import Document, StringField, FloatField, ReferenceField, CASCADE, BooleanField, DictField
-from datetime import datetime
-import datetime 
-from mongoengine import connect
-from core.config import MONGODB_URL
+from mongoengine import (
+    CASCADE,
+    BooleanField,
+    DictField,
+    Document,
+    FloatField,
+    ReferenceField,
+    StringField,
+    connect,
+)
 
-connect('main', username="mongodb", host='127.0.0.1', password="mongodb", port=27017, alias="db1")
+from core.config import MONGO_DB, MONGO_HOST, MONGO_PASS, MONGO_PORT, MONGO_USER
+
+connect(
+    MONGO_DB,
+    username=MONGO_USER,
+    host=MONGO_HOST,
+    password=MONGO_PASS,
+    port=MONGO_PORT,
+    alias="db2",
+)
 
 
 class Goods(Document):
@@ -22,7 +36,6 @@ class Shop(Document):
     data = DictField(required=True)
 
     meta = {"db_alias": "db1"}
-
 
 
 class Simulation(Document):

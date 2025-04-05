@@ -7,7 +7,11 @@ load_dotenv()
 SECRET_KEY = env("SECRET_KEY")
 ALGORITHM = env("ALGORITHM")
 
-MONGODB_URL = env("DB_LINK")
+MONGO_HOST = env("MONGO_HOST")
+MONGO_PORT = int(env("MONGO_PORT"))
+MONGO_USER = env("MONGO_USER")
+MONGO_PASS = env("MONGO_PASS")
+MONGO_DB = env("MONGO_DB")
 
 SECRET_KEY = env("SECRET_KEY")
 
