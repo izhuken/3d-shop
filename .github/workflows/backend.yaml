@@ -16,6 +16,10 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Text
+        working-directory: ./src/backend
+        run: echo ${{ vars.GITHUB_SHA }}
+
       - name: Preparing backend image
         working-directory: ./src/backend
         run: docker build -t 3d-shop-backend -f ./Dockerfile.with-kafka .
