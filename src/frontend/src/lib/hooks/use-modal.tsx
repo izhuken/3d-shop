@@ -8,7 +8,7 @@ import {
 import { createPortal } from 'react-dom';
 
 interface PromiseCallback<T, P = unknown> {
-  resolve(value: T | PromiseLike<T>): void;
+  resolve(value?: T | PromiseLike<T>): void;
   reject(): void;
   payload?: P;
 }

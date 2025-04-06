@@ -29,7 +29,9 @@ export const SimulationCanvas: React.FC<SimulationCanvasProps> = () => {
 
     if (!users) return [];
 
-    return keyframes[keyframeIndex]?.users;
+    console.log(users);
+
+    return users;
   }, [keyframeIndex, keyframes]);
 
   return (
@@ -60,10 +62,11 @@ export const SimulationCanvas: React.FC<SimulationCanvasProps> = () => {
 
         {startPoint && <SimulationShopObject entity={startPoint} />}
 
-        {users.map(({ stamp, x, y }) => (
-          <SimulationUser key={stamp} x={x} y={y} />
+        {users.map(({ stamp, name, color, x, y }) => (
+          <SimulationUser key={`${name}-${stamp}`} color={color} x={x} y={y} />
         ))}
       </Canvas>
     </>
   );
 };
+//

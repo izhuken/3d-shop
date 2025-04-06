@@ -4,4 +4,5 @@ export const QueryKeys = {
   simulationDetails: 'simulationDetails-details',
   goodsList: 'goods-list',
   heatmap: 'heatmap',
+  report: 'report',
 };

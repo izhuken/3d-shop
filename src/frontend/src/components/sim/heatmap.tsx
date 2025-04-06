@@ -13,8 +13,6 @@ export const Heatmap: React.FC<HeatmapProps> = memo(() => {
   const { id } = useParams<{ id: string }>();
   const { data: matrix } = useFetchHeatMap(id ?? '');
 
-  console.log(matrix);
-
   return (
     <>
       {(matrix ?? []).map((subMatrix, i) =>
