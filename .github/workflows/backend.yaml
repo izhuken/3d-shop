@@ -2,7 +2,7 @@ name: Production backend CI CD
 
 on:
   push:
-    branches: ["main"]
+    branches: ["test"]
 
 jobs:
   api-build:
@@ -22,8 +22,27 @@ jobs:
 
       - name: Tagging image
         working-directory: ./src/backend
-        run: docker image tag 3d-shop-backend ${{ secrets.DOCKER_USERNAME }}/3d-shop-backend:latest
+        run: docker image tag 3d-shop-backend ${{ secrets.DOCKER_USERNAME }}/3d-shop-backend:${{ vars.GITHUB_SHA }}
 
       - name: Push image
         working-directory: ./src/backend
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/3d-shop-backend:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/3d-shop-backend:${{ vars.GITHUB_SHA }}
+
+  api-deploy:
+    runs-on: ubuntu-latest
+    needs:
+      - api-build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download kubectl binaries
+        run: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+      - name: Install Kubectl
+        run: sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+      - name: Add config
+        run: echo ${{ secrets.KUBECONFIG }} > /etc/kubeconfig.yaml
+
+      - name: Deploy the backend
+        run: kubectl set image deployments/backend-service backend-service=${{ secrets.DOCKER_USERNAME }}/3d-shop-backend:${{ vars.GITHUB_SHA }} --kubeconfig /etc/kubeconfig.yaml
