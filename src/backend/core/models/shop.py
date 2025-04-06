@@ -1,10 +1,5 @@
-from mongoengine import Document ,UUIDField, StringField, BooleanField, DictField
-from datetime import datetime
-from mongoengine import connect
-from core.config import MONGODB_URL
+from mongoengine import BooleanField, DictField, Document, StringField
 
-
-connect(host=MONGODB_URL)
 
 class Shop(Document):
     name = StringField(required=True)
