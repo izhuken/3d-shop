@@ -4,6 +4,7 @@ from mongoengine import (
     DictField,
     Document,
     FloatField,
+    ListField,
     ReferenceField,
     StringField,
     connect,
@@ -41,4 +42,14 @@ class Shop(Document):
 class Simulation(Document):
     shop = ReferenceField(Shop, reverse_delete_rule=CASCADE)
     data = DictField()
+    meta = {"db_alias": "db1"}
+
+class HeatMap(Document):
+    shop = ReferenceField(Shop, reverse_delete_rule=CASCADE)
+    matrix = ListField(required=True)
+    meta = {"db_alias": "db1"}
+
+class Report(Document):
+    shop = ReferenceField(Shop, reverse_delete_rule=CASCADE)
+    report = ListField(required=True)
     meta = {"db_alias": "db1"}
