@@ -18,7 +18,6 @@ export const ShopCreateScene: React.FC<ShopCreateSceneProps> = () => {
   const cashboxes = watch('cashboxes');
   const shelves = watch('shelves');
   const startPoint = watch('startPoints');
-  console.log(cashboxes);
 
   return (
     <DragControllerContext.Provider
