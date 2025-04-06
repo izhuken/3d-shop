@@ -87,6 +87,7 @@ def parsing_shelf(shelf: dict):
             
             else:
                 for goodses in value_item:
+                    print(goodses)
                     for key, value in goodses.items():
                         new_goodses = {f"{key}": value}
                         if new_goodses in list_goodses:
