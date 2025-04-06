@@ -7,6 +7,8 @@ on:
 jobs:
   api-build:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_CONTEXT: ${{ toJson(github) }}
     steps:
       - uses: actions/checkout@v4
 
@@ -18,7 +20,7 @@ jobs:
 
       - name: Text
         working-directory: ./src/backend
-        run: echo ${{ vars.GITHUB_SHA }}
+        run: echo "$GITHUB_CONTEXT"
 
       - name: Preparing backend image
         working-directory: ./src/backend
