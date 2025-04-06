@@ -1,1 +1,2 @@
-export const RootStore = {};
+export * from './store';
+export * from './types';

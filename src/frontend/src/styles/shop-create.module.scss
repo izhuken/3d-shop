@@ -54,6 +54,49 @@
   }
 }
 
+.optionsRightWrapper {
+  @include flexColumn();
+  gap: 5px;
+  position: fixed;
+  background: white;
+  padding: 10px 5px;
+  right: -220px;
+  border-bottom-right-radius: 5px;
+  width: 220px;
+  max-height: 800px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: right 0.3s ease-in-out;
+  z-index: 2;
+
+  &.open {
+    right: 0;
+  }
+}
+
+.rightSlider {
+  @include flexCenter();
+  position: absolute;
+  background: white;
+  left: -30px;
+  top: 0;
+  border-radius: 0 5px 5px 0;
+  border: none;
+  height: 30px;
+  width: 30px;
+  transition: all 0.3s ease-in-out;
+  transform: rotate(180deg);
+
+  &:hover {
+    cursor: pointer;
+    background: var(--base-hover-gray);
+  }
+
+  &.open > img {
+    transform: rotate(-180deg);
+  }
+}
+
 .hideButton {
   @include flexCenter();
   justify-content: space-between;
@@ -124,6 +167,10 @@
 
   &:hover {
     background: var(--base-hover-gray);
+  }
+
+  &:disabled {
+    background: var(--base-middle-gray);
   }
 }
 

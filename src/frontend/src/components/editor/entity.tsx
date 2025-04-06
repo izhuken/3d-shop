@@ -119,7 +119,6 @@ export const EditorEntityBox: React.FC<EditorEntityBoxProps> = () => {
   useEffect(() => {
     shelfPromise
       ?.then(({ goods, shelf_type }) => {
-        console.log(goods, shelf_type);
         addEntity((x, y) =>
           addShelf({
             x,
@@ -170,10 +169,8 @@ export const EditorEntityBox: React.FC<EditorEntityBoxProps> = () => {
                   ...(shelves as SceneEntity[]),
                   ...(cashboxes as SceneEntity[]),
                 ];
-                console.log(value);
 
                 while (true) {
-                  console.log(value);
                   if (fields.length == 100) {
                     toast.error('Магазин заполнен!');
                     break;

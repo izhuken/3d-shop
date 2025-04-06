@@ -19,6 +19,7 @@
 .card {
   @include flexCenter();
   display: grid;
+  position: relative;
   grid-template-rows: auto 40px;
   width: fit-content;
   height: fit-content;
@@ -119,5 +120,24 @@
 
   &:hover {
     background: rgba(170, 255, 103, 0.5);
+  }
+}
+
+.deleteButton {
+  @include flexCenter();
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  height: 20px;
+  width: 20px;
+  border-radius: 5px;
+  background: white;
+  border: 1px solid #ea3323;
+  cursor: pointer;
+
+  & > img {
+    height: 14px;
+    width: 14px;
+    object-fit: contain;
   }
 }

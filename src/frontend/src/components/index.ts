@@ -4,3 +4,4 @@ export * from './editor';
 export * from './goods';
 export * from './layouts';
 export * from './shop';
+export * from './sim';

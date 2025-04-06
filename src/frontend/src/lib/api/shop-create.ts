@@ -14,8 +14,6 @@ export const useShopCreate = () => {
   const cb = useCallback<SubmitHandler<NewShopForm>>((data, e) => {
     if (e?.nativeEvent.submitter?.id !== 'real-submitter') return;
 
-    console.log(data, e);
-
     const events: _events = {};
 
     const payload: ShopCreate = {
@@ -38,7 +36,12 @@ export const useShopCreate = () => {
     data.events.forEach((event) => {
       for (const [ekey, evalue] of Object.entries(event)) {
         if (ekey === 'name') continue;
-        if (evalue === NaN || evalue === '' || evalue === undefined) continue;
+        if (
+          (typeof evalue === 'number' && Number.isNaN(evalue)) ||
+          evalue === '' ||
+          evalue === undefined
+        )
+          continue;
 
         if (!events[event.name]) {
           events[event.name] = {};
@@ -77,7 +80,7 @@ export const useShopCreate = () => {
 
       scene[shelf.x + 4.5][shelf.y + 4.5] = {
         [`shelf_${i}`]: {
-          goodses: goodses,
+          goodses: [goodses],
           type_shelf: shelf.shelf_type,
           capatity: 100,
         },
@@ -89,7 +92,6 @@ export const useShopCreate = () => {
     }
 
     payload.data.scene = scene;
-    console.log(payload);
 
     mutate(payload);
   }, []);
