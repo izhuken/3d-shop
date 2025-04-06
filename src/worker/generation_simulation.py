@@ -2,6 +2,8 @@ from datetime import date, datetime, time, timedelta
 from parser import parsing_scene, parsing_shop
 from random import choice, uniform
 
+from app.service.heat_map_service import HeatMapService
+from app.service.report_service import ReportService
 from app.service.simulation_service import SimulationService
 from generation_users import generation_users, prepareting_goodses, prepareting_sales
 
@@ -9,6 +11,8 @@ from generation_users import generation_users, prepareting_goodses, prepareting_
 # date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 # print(str(date))
 simulation_service = SimulationService()
+heat_map_service = HeatMapService()
+report_service = ReportService()
 
 EVENTS = None
 SALES = None
@@ -60,10 +64,12 @@ def generation_simulation(shop_id: str):
     prepareting_sales(SALES)
     users = generation_users(25, SALES, LIST_GOODSES)
     json_simulation = {"data": {}}
+    analiz_purchase_simulation = []
     for i in range(2):
         event_list_day, sales_list_day = generation_config_day(EVENTS, SALES)
         traffic_all_day = geneartion_traffic_all_day(OPEN_AT, CLOSED_AT, users, PROBABILITY_OF_USER_APPEARANCE_DURING, PROBABILITY_OF_USER_APPEARANCE, LIST_SHELF, LIST_CACHBOX, DICT_START_POINT, LIST_GOODSES, HEAT_MAP, SCENE, sales_list_day, event_list_day, i)
-
+        analize_day = analiz_purchase(traffic_all_day)
+        analiz_purchase_simulation.append(analize_day)
         for key, value in traffic_all_day.items():
             json_simulation["data"][f"{key}"] = {}
             json_simulation["data"][f"{key}"]["sales"] = value["sales"]
@@ -72,18 +78,32 @@ def generation_simulation(shop_id: str):
             for user in value["users"]:
                 users_list.append({"name": user["name"], "moves": user["moves"]})
             json_simulation["data"][f"{key}"]["users"] = users_list
+
     # json_simulation["shop_id"]
+    report_service.create(shop_id, analiz_purchase_simulation)
     simulation_service.create(shop_id, json_simulation)
+    heat_map_service.create(shop_id, HEAT_MAP)
         # print(key, value)
-
-
-
-    pass
 
 def generation_heat_map(scene):
     heat_map = [ [0 for j in range(len(scene))] for i in range(len(scene))]
     return heat_map
 
+def analiz_purchase(traffic_day):
+    analiz_goods_purchese = {}
+    for key, value in traffic_day.items():
+        for user in value["users"]:
+            # print(value)
+            for cart in user["cart"]:
+                for goods in cart:
+                    if analiz_goods_purchese.get(f"{goods}", None):
+                        analiz_goods_purchese[f"{goods}"] += 1
+                    else:
+                        analiz_goods_purchese[f"{goods}"] = 1
+                            
+    # print(analiz_goods_purchese)
+    return analiz_goods_purchese
+    pass
 
 def generation_config_day(events, sales):
     # print(events)
@@ -117,7 +137,7 @@ def generation_discount_days(sales: list):
             discount["days"] -= 1
             if discount["days"] == 0:
                 WORKEN_DISCOUNT.remove(discount)
-                print(WORKEN_DISCOUNT)
+                # print(WORKEN_DISCOUNT)
 
     return list_discount
 
@@ -176,8 +196,8 @@ def geneartion_traffic_all_day(open_at, closed_at, users, probability_time, prob
                     if probability >= random_number:
                         all_configure["active_events"].append(event)
         user_list = generation_traffic_on_15_minitus(users, probability_time, probability_default, time_interval, shelf_list, cashbox_list, start_point, goodses_list, heat_map, all_configure["sales"], all_configure["active_events"])
-        user_all_list = generation_simulation_user(users, shelf_list, cashbox_list, start_point, goodses_list, heat_map)
-        pathfinding(user_all_list, shelf_list, cashbox_list, start_point, scene)
+        user_all_list = generation_simulation_user(user_list, shelf_list, cashbox_list, start_point, goodses_list, heat_map)
+        pathfinding(user_all_list, shelf_list, cashbox_list, start_point, scene, heat_map)
         all_configure["users"] = user_all_list
         traffic_all_day_dict[f"{time_interval}"] = all_configure
     
@@ -222,7 +242,7 @@ def find_minimum(start: str, end: str, coords, new_scene):
 
 
 
-def pathfinding(user_list, cashbox_list, shelf_list, start_point, scene):
+def pathfinding(user_list, cashbox_list, shelf_list, start_point, scene, heat_map):
     # print(user_list)
     coords = {}
     new_scene = [ [0 for j in range(len(scene))] for i in range(len(scene))]
@@ -271,6 +291,13 @@ def pathfinding(user_list, cashbox_list, shelf_list, start_point, scene):
             else:
                 move_map.extend(local_moves)
         user["moves"] = move_map
+        for move in move_map:
+            i = move[1]
+            j = move[0]
+            for y_m in range(len(scene)):
+                for x_m in range(len(scene)):
+                    if y_m == i and x_m == j:
+                        heat_map[y_m][x_m] += 1
 
 
 def generation_traffic_on_15_minitus(users, probability_time, probability_default, time_interval, shelf_list, cashbox_list, start_point, goodses_list, heat_map, sales_list, event_list):
@@ -298,14 +325,15 @@ def generation_traffic_on_15_minitus(users, probability_time, probability_defaul
                     processed_user["count"] += 1
                     if processed_user["count"] == 2:
                         user_list.remove(user)
-                    
-                if user.get("sales", None) and user.get("goods_type", None):
-                    user["rate"] += IMPACT_OF_DISCOUNT_ON_RATING["sales_and_goods"]
-                elif user.get("sales", None):
-                    user["rate"] += IMPACT_OF_DISCOUNT_ON_RATING["sales"]
                 else:
-                    user["rate"] += IMPACT_OF_DISCOUNT_ON_RATING["default"]
-                PROCESSED_USER.append({"name": user.get("name"), "count": 1})
+                    PROCESSED_USER.append({"name": user.get("name"), "count": 1})
+
+        if user.get("sales", None) and user.get("goods_type", None):
+            user["rate"] += IMPACT_OF_DISCOUNT_ON_RATING["sales_and_goods"]
+        elif user.get("sales", None):
+            user["rate"] += IMPACT_OF_DISCOUNT_ON_RATING["sales"]
+        else:
+            user["rate"] += IMPACT_OF_DISCOUNT_ON_RATING["default"]
         
         for event in event_list:
             user["rate"] -= abs(event["rate"] / 10)
