@@ -1,4 +1,4 @@
-from .config import MONGODB_URL  #noqa
+# from config import MONGODB_URL  #noqa
 from mongoengine import (
     CASCADE,
     BooleanField,
@@ -29,9 +29,12 @@ class Shop(Document):
 
     meta = {"db_alias": "db1"}
 
-
+    # users: list[UserJson]
+    # active_events: list[ActiveEventsJson]
+    # sales: list[SalesJson]
 
 class Simulation(Document):
     shop = ReferenceField(Shop, reverse_delete_rule=CASCADE)
-    data = DictField()
+    data = DictField(required=True)
+
     meta = {"db_alias": "db1"}

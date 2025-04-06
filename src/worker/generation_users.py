@@ -29,5 +29,5 @@ def generation_users(count, sales, goodses):
             goods_type = fake.random_element(elements=FAKER_GOODSES)
         else:
             goods_type = None
-        users.append({"name": name, "sales": sale, "goods_type": goods_type, "cart": {}, "total_cost": 0})
+        users.append({"name": name, "sales": sale, "goods_type": goods_type, "cart": {}, "total_cost": 0, "rate": 7})
     return users

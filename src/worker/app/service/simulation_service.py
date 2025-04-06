@@ -6,8 +6,8 @@ from app.schemas.simulation import SimulationCreate
 class SimulationService():
     repository = SimulationRepository()
 
-    def create(self, data: SimulationCreate):
-        return self.repository.create(data=data)
+    def create(self, shop_id: str,data: SimulationCreate):
+        return self.repository.create(shop_id=shop_id, data=data)
         
     
     def delete(self, id: str):
