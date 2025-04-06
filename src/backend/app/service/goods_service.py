@@ -1,6 +1,6 @@
 from repository.goods_repository import GoodsRepository
-from app.schemas.goods import GoodsCreate, Goodses
 
+from app.schemas.goods import GoodsCreate
 
 
 class GoodsService():
@@ -8,7 +8,8 @@ class GoodsService():
 
     def create(self, data: GoodsCreate):
         return self.repository.create(data=data)
-        
+        # print(result.data)
+        # return {"id": result.data.id.__str__()}
     
     def delete(self, id: str):
         return self.repository.delete(id)

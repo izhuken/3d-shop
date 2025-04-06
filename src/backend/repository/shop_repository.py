@@ -11,13 +11,13 @@ class ShopRepository():
 
     def create(self, data: dict):
         insert_data = data.model_dump(exclude_unset=True)
-        print(insert_data)
+        # print(insert_data)
         new_data = self.model(name=insert_data['name'], is_generated=insert_data['is_generated'], open_at=insert_data['open_at'], close_at=insert_data['close_at'], data=insert_data['data'])
         new_data.save()
-
-        print(new_data)
+        result = self.model.objects(name=insert_data['name']).first()
         
-        return SuccessDTO({"ok": True})
+        return SuccessDTO(result)
+        # return SuccessDTO({"ok": True})
     
     def delete(self, id: str):
         data = self.model.objects(id=id).first()
