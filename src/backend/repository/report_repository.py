@@ -1,23 +1,23 @@
-from core.models.goods import Shop, Simulation
-
-# from mongoengine import connect
-# from core.config import MONGODB_URL
+from core.models.goods import Report, Shop
 from dto import ErrorDTO, SuccessDTO
 
-# connect(host=MONGODB_URL)
+# insert_data = data.model_dump(exclude_unset=True)
+    # new_data = self.model(goods_type=insert_data['goods_type'], cost=insert_data['cost'])
+    # new_data.save()
+    
+    # return SuccessDTO(insert_data)
 
+class ReportRepository():
+    model = Report
 
-class SimulationRepository():
-    model = Simulation
-
-    def create(self, data: dict):
-        insert_data = data.model_dump(exclude_unset=True)
-        shop = Shop.objects(id=insert_data['shop_id']).first()
+    def create(self, shop_id: str ,data: list):
+        # insert_data = data.model_dump(exclude_unset=True)
+        shop = Shop.objects(id=shop_id).first()
         
         if not shop:
             return ErrorDTO('Shop not found', 404)
 
-        new_data = self.model(shop=shop, data=insert_data['data'])
+        new_data = self.model(shop=shop, report=list)
         new_data.save()
 
         return SuccessDTO(new_data)
@@ -34,7 +34,7 @@ class SimulationRepository():
         
         if not shop:
             return ErrorDTO('Shop not found', 404)
-        
+            
         data = self.model.objects(shop=shop).first()
         if not data:
             return ErrorDTO('Data not found', 404)

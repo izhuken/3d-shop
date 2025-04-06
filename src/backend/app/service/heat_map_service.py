@@ -1,12 +1,12 @@
-from repository.simulation_repository import SimulationRepository
+from repository.heat_map_repository import HeatMapRepository
 
-from app.schemas.simulation import SimulationCreate
+# from app.schemas.simulation import HeatMapRepository
 
 
-class SimulationService():
-    repository = SimulationRepository()
+class HeatMapService():
+    repository = HeatMapRepository()
 
-    def create(self, shop_id: str,data: SimulationCreate):
+    def create(self, shop_id: str,data: list):
         return self.repository.create(shop_id=shop_id, data=data)
         
     
@@ -17,7 +17,8 @@ class SimulationService():
         result = self.repository.get_by_id(id)
         print(result)
         print(result.data.shop.name)
-        data = {"id": result.data.id.__str__(), "shop_name": result.data.shop.name, "data": result.data.data}
+
+        data = {"id": result.data.id.__str__(), "shop_name": result.data.shop.name, "data": result.data.matrix.__str__()}
         return data
     
 

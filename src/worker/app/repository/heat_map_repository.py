@@ -1,4 +1,4 @@
-from core.models import Shop, Simulation
+from core.models import HeatMap, Shop
 from dto import ErrorDTO, SuccessDTO
 
 # insert_data = data.model_dump(exclude_unset=True)
@@ -7,17 +7,17 @@ from dto import ErrorDTO, SuccessDTO
     
     # return SuccessDTO(insert_data)
 
-class SimulationRepository():
-    model = Simulation
+class HeatMapRepository():
+    model = HeatMap
 
-    def create(self, shop_id: str ,data: dict):
+    def create(self, shop_id: str ,data: list):
         # insert_data = data.model_dump(exclude_unset=True)
         shop = Shop.objects(id=shop_id).first()
         
         if not shop:
             return ErrorDTO('Shop not found', 404)
 
-        new_data = self.model(shop=shop, data=data['data'])
+        new_data = self.model(shop=shop, matrix=data)
         new_data.save()
 
         return SuccessDTO(new_data)

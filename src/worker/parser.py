@@ -96,7 +96,6 @@ def parsing_shelf(shelf: dict):
     
     
     for goods in list_goodses:
-        for key in goods.keys():
-            dict_shelf[key_shelf]["goodses"].append(key)
+        dict_shelf[key_shelf]["goodses"].append(goods)
             
     return list_goodses, dict_shelf
