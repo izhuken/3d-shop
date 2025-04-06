@@ -11,15 +11,17 @@ export const SimulationTitle: React.FC<SimulationTitleProps> = ({ title }) => {
   const nav = useNavigate();
 
   return (
-    <section className={ShopCreateStyles.titleWrapper}>
-      <EditorButton action={() => nav('/admin')}>
-        <img
-          src='/admin-side-arrow.svg'
-          className={ShopCreateStyles.backButtonImage}
-          alt=''
-        />
-      </EditorButton>
-      <span>{title}</span>
-    </section>
+    <>
+      <section className={ShopCreateStyles.titleWrapper}>
+        <EditorButton action={() => nav('/admin')}>
+          <img
+            src='/admin-side-arrow.svg'
+            className={ShopCreateStyles.backButtonImage}
+            alt=''
+          />
+        </EditorButton>
+        <span>{title}</span>
+      </section>
+    </>
   );
 };

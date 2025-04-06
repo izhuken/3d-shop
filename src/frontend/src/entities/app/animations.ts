@@ -30,6 +30,8 @@ export interface ActiveSales {
 }
 
 export interface UserMove {
+  name: string;
+  color: string;
   x: number;
   y: number;
   stamp: string;

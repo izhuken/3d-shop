@@ -13,74 +13,6 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { QueryKeys } from './keys';
 
-export const mocksim: SimDetails = {
-  '2025-04-06 09:00:00.181925': {
-    active_events: [],
-    sales: [],
-    users: [],
-  },
-  '2025-04-06 10:37:00.181925': {
-    active_events: [{ name: 'Ивент 1' }],
-    sales: [],
-    users: [],
-  },
-  '2025-04-06 10:40:00.181925': {
-    active_events: [{ name: 'Ивент 1' }],
-    sales: [{ goods_type: 'Молоко', size: 0.15 }],
-    users: [],
-  },
-  '2025-04-06 12:00:00.181925': {
-    active_events: [{ name: 'Ивент 1' }],
-    sales: [{ goods_type: 'Молоко', size: 0.15 }],
-    users: [
-      {
-        name: 'тестовый',
-        moves: [
-          [4, 8],
-          [4, 7],
-          [4, 6],
-          [3, 6],
-          [2, 6],
-          [1, 6],
-          [2, 6],
-          [2, 6],
-          [3, 6],
-          [4, 6],
-          [5, 6],
-          [6, 6],
-          [7, 6],
-          [6, 6],
-          [5, 6],
-          [4, 6],
-          [4, 7],
-          [4, 8],
-        ],
-      },
-    ],
-  },
-
-  '2025-04-06 14:00:00.181925': {
-    active_events: [],
-    sales: [{ goods_type: 'Молоко', size: 0.15 }],
-    users: [],
-  },
-  '2025-04-06 16:40:00.181925': {
-    active_events: [],
-    sales: [],
-    users: [],
-  },
-  '2025-04-06 16:45:00.181925': {
-    active_events: [],
-    sales: [{ goods_type: 'Выпечка', size: 0.15 }],
-    users: [],
-  },
-  '2025-04-06 21:00:00.181925': {
-    active_events: [],
-    sales: [],
-    users: [],
-  },
-};
-
 export const useFetchSimulation = (id: string) => {
   const d = useAppDispatch();
 
@@ -140,10 +72,15 @@ export const useFetchSimulation = (id: string) => {
         // with keyframes users
         for (const user of users) {
           let nextStamp = new Date(currentTime);
+          const color =
+            '#' +
+            ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0');
 
           for (const [x, y] of user.moves) {
             nextStamp.setSeconds(nextStamp.getSeconds() + 1);
             const userMove: UserMove = {
+              name: user.name,
+              color: color,
               stamp: nextStamp.toISOString(),
               x: y,
               y: x,
