@@ -4,38 +4,35 @@ on:
   push:
     branches: ["test"]
 
-env:
-  TEST_LABEL: "test-label"
-
 jobs:
-  # api-build:
-  #   runs-on: ubuntu-latest
-  #   env:
-  #     GITHUB_CONTEXT: ${{ toJson(github) }}
-  #   steps:
-  #     - uses: actions/checkout@v4
+  api-build:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_CONTEXT: ${{ toJson(github) }}
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - name: Log in to Docker Hub
-  #       uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
-  #       with:
-  #         username: ${{ secrets.DOCKER_USERNAME }}
-  #         password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-  #     - name: Text
-  #       working-directory: ./src/backend
-  #       run: echo "$GITHUB_CONTEXT"
+      - name: Text
+        working-directory: ./src/backend
+        run: echo "$GITHUB_CONTEXT"
 
-  #     - name: Preparing backend image
-  #       working-directory: ./src/backend
-  #       run: docker build -t 3d-shop-backend -f ./Dockerfile.with-kafka .
+      - name: Preparing backend image
+        working-directory: ./src/backend
+        run: docker build -t 3d-shop-backend -f ./Dockerfile.with-kafka .
 
-  #     - name: Tagging image
-  #       working-directory: ./src/backend
-  #       run: docker image tag 3d-shop-backend ${{ secrets.DOCKER_USERNAME }}/3d-shop-backend:latest
+      - name: Tagging image
+        working-directory: ./src/backend
+        run: docker image tag 3d-shop-backend ${{ secrets.DOCKER_USERNAME }}/3d-shop-backend:test-label
 
-  #     - name: Push image
-  #       working-directory: ./src/backend
-  #       run: docker push ${{ secrets.DOCKER_USERNAME }}/3d-shop-backend:latest
+      - name: Push image
+        working-directory: ./src/backend
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/3d-shop-backend:test-label
 
   api-deploy:
     runs-on: ubuntu-latest
@@ -55,4 +52,4 @@ jobs:
         run: sudo chmod 777 /etc/kubeconfig.yaml  
 
       - name: Deploy the backend
-        run: kubectl set image deployments/backend-service backend-service=${{ secrets.DOCKER_USERNAME }}/3d-shop-backend:latest --kubeconfig /etc/kubeconfig.yaml
+        run: kubectl set image deployments/backend-service backend-service=${{ secrets.DOCKER_USERNAME }}/3d-shop-backend:test-label --kubeconfig /etc/kubeconfig.yaml
