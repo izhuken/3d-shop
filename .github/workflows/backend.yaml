@@ -4,6 +4,9 @@ on:
   push:
     branches: ["test"]
 
+env:
+  TEST_LABEL: "test-label"
+
 jobs:
   api-build:
     runs-on: ubuntu-latest
@@ -28,11 +31,11 @@ jobs:
 
       - name: Tagging image
         working-directory: ./src/backend
-        run: docker image tag 3d-shop-backend ${{ secrets.DOCKER_USERNAME }}/3d-shop-backend:${{ vars.GITHUB_SHA }}
+        run: docker image tag 3d-shop-backend ${{ secrets.DOCKER_USERNAME }}/3d-shop-backend:${{ TEST_LABEL }}
 
       - name: Push image
         working-directory: ./src/backend
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/3d-shop-backend:${{ vars.GITHUB_SHA }}
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/3d-shop-backend:${{ TEST_LABEL }}
 
   api-deploy:
     runs-on: ubuntu-latest
@@ -51,4 +54,4 @@ jobs:
         run: echo ${{ secrets.KUBECONFIG }} > /etc/kubeconfig.yaml
 
       - name: Deploy the backend
-        run: kubectl set image deployments/backend-service backend-service=${{ secrets.DOCKER_USERNAME }}/3d-shop-backend:${{ vars.GITHUB_SHA }} --kubeconfig /etc/kubeconfig.yaml
+        run: kubectl set image deployments/backend-service backend-service=${{ secrets.DOCKER_USERNAME }}/3d-shop-backend:${{ TEST_LABEL }} --kubeconfig /etc/kubeconfig.yaml
